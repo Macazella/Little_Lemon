@@ -1,0 +1,32 @@
+Claro, aquí están los pasos para agregar cambios a tu repositorio local, hacer un commit y luego subir esos cambios a tu repositorio en GitHub:
+
+1. **Abre la línea de comandos**:
+   - En Windows, puedes usar **Command Prompt**, **PowerShell**, o cualquier terminal que prefieras.
+
+2. **Navega al directorio de tu repositorio local**:
+   ```powershell
+   cd "C:\Users\macazella\META DATA ENGINEER\Little_lemon_project_MagaliCazellaM\Github\Little_Lemon"
+   ```
+
+3. **Agrega los cambios al área de preparación (staging area)**:
+   Si quieres agregar todos los archivos modificados, usa:
+   ```bash
+   git add .
+   ```
+   Si solo quieres agregar archivos específicos, usa:
+   ```bash
+   git add nombre_del_archivo
+   ```
+
+4. **Haz un commit con un mensaje descriptivo**:
+   ```bash
+   git commit -m "Tu mensaje descriptivo sobre los cambios realizados"
+   ```
+
+5. **Envía los cambios a tu repositorio en GitHub**:
+   ```bash
+   git push origin main
+   ```
+   Nota: Si estás trabajando en una rama diferente a `main`, reemplaza `main` con el nombre de tu rama actual.
+
+Estos comandos asumen que ya tienes configurado tu repositorio remoto en GitHub y que estás trabajando en la rama correcta. Si tienes configuraciones adicionales, como autenticación de dos factores o necesitas establecer un repositorio remoto, asegúrate de haberlo configurado previamente.
