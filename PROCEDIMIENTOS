@@ -1,0 +1,134 @@
+Claro, a continuación te proporciono ejemplos de código SQL para implementar los procedimientos almacenados solicitados en tu base de datos **Little Lemon**. Estos procedimientos están diseñados para trabajar con la estructura de tablas que has definido.
+
+### 1. **Procedimiento `GetMaxQuantity()`**
+
+Este procedimiento devuelve la cantidad máxima de ítems pedidos para una tabla específica.
+
+```sql
+DELIMITER //
+
+CREATE PROCEDURE GetMaxQuantity(IN p_TableNo INT)
+BEGIN
+    SELECT MAX(Quantity) AS MaxQuantity
+    FROM Orders
+    WHERE TableNo = p_TableNo;
+END //
+
+DELIMITER ;
+```
+
+### 2. **Procedimiento `ManageBooking()`**
+
+Este procedimiento puede servir para gestionar una reserva, permitiendo crear, actualizar o eliminar reservas. Aquí se asume que se pasan parámetros para la acción a realizar (`'create'`, `'update'`, `'delete'`), y los datos necesarios para cada acción.
+
+```sql
+DELIMITER //
+
+CREATE PROCEDURE ManageBooking(
+    IN p_Action VARCHAR(10),
+    IN p_BookingID INT,
+    IN p_TableNo INT,
+    IN p_GuestFirstName VARCHAR(100),
+    IN p_GuestLastName VARCHAR(100),
+    IN p_BookingSlot TIME,
+    IN p_EmployeeID INT
+)
+BEGIN
+    IF p_Action = 'create' THEN
+        INSERT INTO Bookings (TableNo, GuestFirstName, GuestLastName, BookingSlot, EmployeeID)
+        VALUES (p_TableNo, p_GuestFirstName, p_GuestLastName, p_BookingSlot, p_EmployeeID);
+        
+    ELSEIF p_Action = 'update' THEN
+        UPDATE Bookings
+        SET TableNo = p_TableNo,
+            GuestFirstName = p_GuestFirstName,
+            GuestLastName = p_GuestLastName,
+            BookingSlot = p_BookingSlot,
+            EmployeeID = p_EmployeeID
+        WHERE BookingID = p_BookingID;
+        
+    ELSEIF p_Action = 'delete' THEN
+        DELETE FROM Bookings
+        WHERE BookingID = p_BookingID;
+        
+    END IF;
+END //
+
+DELIMITER ;
+```
+
+### 3. **Procedimiento `UpdateBooking()`**
+
+Este procedimiento actualiza una reserva existente.
+
+```sql
+DELIMITER //
+
+CREATE PROCEDURE UpdateBooking(
+    IN p_BookingID INT,
+    IN p_TableNo INT,
+    IN p_GuestFirstName VARCHAR(100),
+    IN p_GuestLastName VARCHAR(100),
+    IN p_BookingSlot TIME,
+    IN p_EmployeeID INT
+)
+BEGIN
+    UPDATE Bookings
+    SET TableNo = p_TableNo,
+        GuestFirstName = p_GuestFirstName,
+        GuestLastName = p_GuestLastName,
+        BookingSlot = p_BookingSlot,
+        EmployeeID = p_EmployeeID
+    WHERE BookingID = p_BookingID;
+END //
+
+DELIMITER ;
+```
+
+### 4. **Procedimiento `AddBooking()`**
+
+Este procedimiento agrega una nueva reserva a la base de datos.
+
+```sql
+DELIMITER //
+
+CREATE PROCEDURE AddBooking(
+    IN p_TableNo INT,
+    IN p_GuestFirstName VARCHAR(100),
+    IN p_GuestLastName VARCHAR(100),
+    IN p_BookingSlot TIME,
+    IN p_EmployeeID INT
+)
+BEGIN
+    INSERT INTO Bookings (TableNo, GuestFirstName, GuestLastName, BookingSlot, EmployeeID)
+    VALUES (p_TableNo, p_GuestFirstName, p_GuestLastName, p_BookingSlot, p_EmployeeID);
+END //
+
+DELIMITER ;
+```
+
+### 5. **Procedimiento `CancelBooking()`**
+
+Este procedimiento cancela una reserva existente.
+
+```sql
+DELIMITER //
+
+CREATE PROCEDURE CancelBooking(
+    IN p_BookingID INT
+)
+BEGIN
+    DELETE FROM Bookings
+    WHERE BookingID = p_BookingID;
+END //
+
+DELIMITER ;
+```
+
+### Descripción de los Procedimientos
+
+- **`GetMaxQuantity()`**: Devuelve la cantidad máxima de ítems pedidos para una mesa específica.
+- **`ManageBooking()`**: Realiza operaciones de creación, actualización o eliminación de reservas según el parámetro `p_Action`.
+- **`UpdateBooking()`**: Actualiza los detalles de una reserva existente.
+- **`AddBooking()`**: Agrega una nueva reserva a la base de datos.
+- **`CancelBooking()`**: Cancela (elimina) una reserva existente.
